@@ -22,7 +22,7 @@ Este arquivo contém as seguintes configurações:
 
 Logging: Define o nível de log para o aplicativo. Neste exemplo, o nível padrão é "Information" e o nível para logs específicos do ASP.NET Core é definido como "Warning".
 
-ConnectionStrings: Define a string de conexão com o banco de dados. No exemplo fornecido, a string de conexão aponta para um servidor chamado "MATEUS", com um banco de dados chamado "DB_Cadastro_Pessoas". A autenticação usada é a autenticação integrada do Windows (SSPI) e o certificado do servidor é confiável (TrustServerCertificate=True).
+ConnectionStrings: Define a string de conexão com o banco de dados. No exemplo fornecido, a string de conexão aponta para um servidor chamado "yourServerName", com um banco de dados chamado "DB_Controle_Pedidos". A autenticação usada é a autenticação integrada do Windows (SSPI) e o certificado do servidor é confiável (TrustServerCertificate=True).
 
 AllowedHosts: Especifica quais hosts são permitidos para acessar o aplicativo. Neste exemplo, o valor "*" indica que todos os hosts são permitidos. Você pode ajustar essa configuração para restringir o acesso apenas a hosts específicos, se necessário.
 
