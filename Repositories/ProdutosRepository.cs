@@ -26,9 +26,18 @@ namespace Controle_de_pedidos.Repositories
 
         public async Task<ProdutosModel> AddProduto(ProdutosModel produtos)
         {
-            await _dbContext.Produtos.AddAsync(produtos);
-            await _dbContext.SaveChangesAsync();
-            return produtos;
+            ProdutosModel produtoByName = await _dbContext.Produtos.FirstOrDefaultAsync(x => x.Nome == produtos.Nome);
+            if (produtoByName == null)
+            {
+                await _dbContext.Produtos.AddAsync(produtos);
+                await _dbContext.SaveChangesAsync();
+                return produtos;
+            }
+            else
+            {
+                throw new Exception("Esse produto já existe!");
+            }
+            
         }
 
         public async Task<ProdutosModel> UpdateProduto(ProdutosModel produtos, int id)

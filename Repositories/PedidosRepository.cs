@@ -2,6 +2,7 @@
 using Controle_de_pedidos.Models;
 using Controle_de_pedidos.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Controle_de_pedidos.Repositories
 {
@@ -26,7 +27,8 @@ namespace Controle_de_pedidos.Repositories
 
         public async Task<PedidosModel> AddPedido(PedidosModel pedidos)
         {
-            pedidos.Identificador = IdentificadorHelper.GetNextPatternValue();
+            List<PedidosModel> getAll = await _dbContext.Pedidos.ToListAsync();
+            pedidos.Identificador = IdentificadorHelper.GetNextPatternValue(getAll);
             pedidos.ValorTotal = 0;
             await _dbContext.Pedidos.AddAsync(pedidos);
             await _dbContext.SaveChangesAsync();

@@ -57,8 +57,8 @@ namespace Controle_de_pedidos.Controllers
             try
             {
                 pessoaModel.Id = id;
-                ProdutosModel item = await _produtosRepository.UpdateProduto(pessoaModel, id);
-                return Ok(item);
+                ProdutosModel produto = await _produtosRepository.UpdateProduto(pessoaModel, id);
+                return Ok(produto);
             }
             catch (Exception ex)
             {

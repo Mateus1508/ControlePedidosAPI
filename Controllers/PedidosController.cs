@@ -47,7 +47,7 @@ namespace Controle_de_pedidos.Controllers
             try
             {
                 PedidosModel pedido = await _pedidosRepository.AddPedido(pedidoModel);
-                return Ok(pedido.Id);
+                return Ok(pedido);
             }
             catch (Exception ex)
             {

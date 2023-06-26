@@ -12,7 +12,6 @@ namespace Controle_de_pedidos.Models
         [JsonIgnore]
         public PedidosModel? Pedido { get; set;}
         public int ProdutoId { get; set; }
-        [JsonIgnore]
         public ProdutosModel? Produto { get; set; }
         public int Quantidade { get; set;}
 

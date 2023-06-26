@@ -23,12 +23,12 @@ namespace Controle_de_pedidos.Controllers
             return Ok(item);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<List<ItensDePedidoModel>>> GetById([BindRequired] int id)
+        [HttpGet("{pedidoId}")]
+        public async Task<ActionResult<List<ItensDePedidoModel>>> GetByPedidoId([BindRequired] int pedidoId)
         {
             try
             {
-                ItensDePedidoModel item = await _itensDePedidosRepository.GetById(id);
+                List<ItensDePedidoModel> item = await _itensDePedidosRepository.GetByPedidoId(pedidoId);
                 return Ok(item);
             }
             catch (Exception ex)
@@ -43,7 +43,7 @@ namespace Controle_de_pedidos.Controllers
             try
             {
                 ItensDePedidoModel item = await _itensDePedidosRepository.AddItem(itemModel);
-                return Ok(item.Id);
+                return Ok(item);
             }
             catch (Exception ex)
             {

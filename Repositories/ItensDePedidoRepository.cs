@@ -18,6 +18,12 @@ namespace Controle_de_pedidos.Repositories
             return await _dbContext.ItensDePedido.ToListAsync();
         }
 
+        public async Task<List<ItensDePedidoModel>> GetByPedidoId(int pedidoId)
+        {
+            List<ItensDePedidoModel> itens = await _dbContext.ItensDePedido.Include(x => x.Produto).Where(x => x.PedidoId == pedidoId).ToListAsync();
+            return itens ?? throw new Exception("Pedido não encontrado!");
+        }
+
         public async Task<ItensDePedidoModel> GetById(int id)
         {
             ItensDePedidoModel item = await _dbContext.ItensDePedido.FirstOrDefaultAsync(x => x.Id == id);
@@ -26,7 +32,7 @@ namespace Controle_de_pedidos.Repositories
 
         public async Task<ItensDePedidoModel> AddItem(ItensDePedidoModel item)
         {
-            decimal somaTotal = item.Valor;
+            item.Valor *= item.Quantidade;
 
             var hasPedido = await _dbContext.ItensDePedido.FirstOrDefaultAsync(x => x.PedidoId == item.PedidoId && x.ProdutoId == item.ProdutoId);
             if (hasPedido != null)
@@ -34,16 +40,12 @@ namespace Controle_de_pedidos.Repositories
                 throw new Exception("Este produto já foi pedido!");
             }
 
-            var produtoById = await _dbContext.Produtos.FirstOrDefaultAsync(x => x.Id == item.ProdutoId);
-            if (produtoById == null)
-            {
-                throw new Exception("Produto não encontrado!");
-            }
+            var produtoById = await _dbContext.Produtos.FirstOrDefaultAsync(x => x.Id == item.ProdutoId) ?? throw new Exception("Produto não encontrado!");
 
-            var PedidoById  = await _dbContext.Pedidos.FirstOrDefaultAsync(x => x.Id == item.PedidoId);
+            var PedidoById = await _dbContext.Pedidos.FirstOrDefaultAsync(x => x.Id == item.PedidoId);
             if (PedidoById != null)
             {
-                PedidoById.ValorTotal = somaTotal++;
+                PedidoById.ValorTotal += item.Valor;
             }
             else
             {
