@@ -61,6 +61,16 @@ namespace Controle_de_pedidos.Repositories
         {
             ItensDePedidoModel itemById = await GetById(id);
 
+            var PedidoById = await _dbContext.Pedidos.FirstOrDefaultAsync(x => x.Id == itemById.PedidoId);
+            if (PedidoById != null)
+            {
+                PedidoById.ValorTotal -= itemById.Valor;
+            }
+            else
+            {
+                throw new Exception("Pedido não encontrado!");
+            }
+
             _dbContext.ItensDePedido.Remove(itemById);
             await _dbContext.SaveChangesAsync();
             return "Item excluido com sucesso!";
